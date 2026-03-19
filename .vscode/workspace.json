@@ -2,7 +2,7 @@
     "settings": {
         "terminal.explorerKind": "integrated",
         "terminal.integrated.profiles.windows": {
-            "MyCustomTerminal": {
+            "Developer PowerShell": {
                 "path": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "args": [
                     "-noe",
@@ -11,6 +11,6 @@
                 ]
             }
         },
-        "terminal.integrated.defaultProfile.windows": "MyCustomTerminal"
+        "terminal.integrated.defaultProfile.windows": "Developer PowerShell"
     }
 }
