@@ -1,5 +1,13 @@
 {
-    "settings": {
+	"folders": [
+		{
+			"path": "F:/Projects/computer-graphics"
+		},
+		{
+			"path": "F:/Projects/phpc"
+		}
+	],
+	"settings": {
         "terminal.explorerKind": "integrated",
         "terminal.integrated.profiles.windows": {
             "Developer PowerShell": {
@@ -9,8 +17,16 @@
                     "-c",
                     "&{Import-Module \"C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"; Enter-VsDevShell 7213f882}"
                 ]
+            },
+            "Developer Command Prompt x64": {
+                "path": "C:\\Windows\\SysWOW64\\cmd.exe",
+                "args": [
+                    "%comspec%",
+                    "/k",
+                    "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Auxiliary\\Build\\vcvars64.bat"
+                ]
             }
         },
-        "terminal.integrated.defaultProfile.windows": "Developer PowerShell"
+        "terminal.integrated.defaultProfile.windows": "Developer Command Prompt x64"
     }
 }
