@@ -57,9 +57,18 @@ int main() {
 
   We need a 2-dimensional grid and a 2-dimensional block.
   In a block, we want a little more than the warp size to exploit temporal parallelism.
-  */
+  So for a problem of size 1024 x 1024, the following works:
   dim3 DimGrid(64, 64);
-  dim3 DimBlock(32, 8);
+  dim3 DimBlock(16, 16);
+  
+  Note that, if we fix DimBlock, then DimGrid must be computed as:
+  DimGrid.x = (M + DimBlock.x - 1) / DimBlock.x;
+  DimGrid.y = (N + DimBlock.y - 1) / DimBlock.y
+  */
+  const unsigned int blockSize = 16;
+  dim3 DimGrid((M + blockSize - 1) / blockSize, (N + blockSize - 1) / blockSize);
+  dim3 DimBlock(blockSize, blockSize);
+
 
   h_A = (double *)malloc(N * LD * sizeof(double));
   h_B = (double *)malloc(K * LD * sizeof(double));
