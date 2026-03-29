@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include "utils.h"
 
+#define BLOCK_SIZE 16
+
 __device__ double dotProduct(const double *A, const double *B, const unsigned int K,
                                       const unsigned int ldA, const unsigned int ldB,
                                       const unsigned int rowA, const unsigned int colB) {
@@ -19,15 +21,37 @@ __global__ void matmat(const double *A, const double *B, double *C,
                              const unsigned int K, const unsigned int ldA,
                              const unsigned int ldB, const unsigned int ldC) {
   /**
-  We assume 2-dimensional blocks and grid.
-  One thread computes one element of C.
-  No shared memory is used, so all threads read from global memory.
+  Each block is responsible for computing one square sub-matrix Csub of C 
+  by loading tiles of input matrices A and B from global memory to shared memory.
+  Each thread within the block: 
+  1) loads a single element from A and B into shared memory
+  2) computes a single element of Csub using all the elements loaded by the threads in the block
   */
-  const unsigned int row = blockIdx.y * blockDim.y + threadIdx.y;
-  const unsigned int col = blockIdx.x * blockDim.x + threadIdx.x;
 
-  if (row < N && col < M) {
-    C[row * ldC + col] = dotProduct(A, B, K, ldA, ldB, row, col);
+  const unsigned int globalRow = blockIdx.y * blockDim.y + threadIdx.y;
+  const unsigned int globalCol = blockIdx.x * blockDim.x + threadIdx.x;
+
+  const unsigned int localRow = threadIdx.y;
+  const unsigned int localCol = threadIdx.x;
+
+  __shared__ double shared_A[BLOCK_SIZE * BLOCK_SIZE];
+  __shared__ double shared_B[BLOCK_SIZE * BLOCK_SIZE];
+
+  double res = 0.0f;
+  
+  for (int i = 0; i < K; i += BLOCK_SIZE) {
+    shared_A[localRow * BLOCK_SIZE + localCol] = A[globalRow * ldA + (i + localCol)];
+    shared_B[localRow * BLOCK_SIZE + localCol] = B[(i + localRow) * ldB + globalCol];
+    __syncthreads(); // Barrier to ensure all threads loaded their share of data into shared memory before proceeding
+
+    for (int k = 0; k < BLOCK_SIZE; k++) {
+      res += shared_A[localRow * BLOCK_SIZE + k] * shared_B[k * BLOCK_SIZE + localCol];
+    }
+    __syncthreads(); // Barrier to ensure all threads have completed their computation using the current tile before replacing it with the next tile
+  }
+
+  if (globalRow < N && globalCol < M) {
+    C[globalRow * ldC + globalCol] = res;
   }
 }
 
@@ -43,32 +67,8 @@ int main() {
   double *h_B, *d_B; // K x M
   double *h_C, *d_C; // N x M
 
-  /**
-  We need as many threads as elements in C.
-  We also need a 2-dimensional block to compute the row and column indices of C.
-  Recommended minimum number of threads in a block is 32, the warp size.
-  Maximum number of threads in a block is 1024 (so the dimensions must multiply to a value less or equal than 1024).
-
-  For example, a very simple configuration could be:
-  dim3 DimGrid(1024);
-  dim3 DimBlock(32, 32);
-  But having a 1-dimensional grid of 1024 blocks means that blockIdx.y will always be equal to 0,
-  so the row index of C will be computed only with threadIdx.y, which can take values from 0 to 31.
-
-  We need a 2-dimensional grid and a 2-dimensional block.
-  In a block, we want a little more than the warp size to exploit temporal parallelism.
-  So for a problem of size 1024 x 1024, the following works:
-  dim3 DimGrid(64, 64);
-  dim3 DimBlock(16, 16);
-  
-  Note that, if we fix DimBlock, then DimGrid must be computed as:
-  DimGrid.x = (M + DimBlock.x - 1) / DimBlock.x;
-  DimGrid.y = (N + DimBlock.y - 1) / DimBlock.y
-  */
-  const unsigned int blockSize = 16;
-  dim3 DimGrid((M + blockSize - 1) / blockSize, (N + blockSize - 1) / blockSize);
-  dim3 DimBlock(blockSize, blockSize);
-
+  dim3 DimGrid((M + BLOCK_SIZE - 1) / BLOCK_SIZE, (N + BLOCK_SIZE - 1) / BLOCK_SIZE);
+  dim3 DimBlock(BLOCK_SIZE, BLOCK_SIZE);
 
   h_A = (double *)malloc(N * LD * sizeof(double));
   h_B = (double *)malloc(K * LD * sizeof(double));
