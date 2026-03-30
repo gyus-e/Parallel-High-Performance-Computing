@@ -10,14 +10,14 @@ matmat.exe: matmat.obj utils.obj
 matmat_naive.exe: matmat_naive.obj utils.obj
 	$(CC) matmat_naive.obj utils.obj -o matmat_naive.exe $(CFLAGS)
 
-matmat.obj: matmat.cu utils.h
+matmat.obj: matmat.cu utils.hpp
 	$(CC) -c matmat.cu -o matmat.obj $(CFLAGS)
 
-matmat_naive.obj: matmat_naive.cu utils.h
+matmat_naive.obj: matmat_naive.cu utils.hpp
 	$(CC) -c matmat_naive.cu -o matmat_naive.obj $(CFLAGS)
 
-utils.obj: utils.c utils.h
-	$(CC) -c utils.c -o utils.obj $(CFLAGS)
+utils.obj: utils.cpp utils.hpp
+	$(CC) -c utils.cpp -o utils.obj $(CFLAGS)
 
 clean:
 	rm -f *.exe *.obj *.pdb

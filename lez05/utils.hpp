@@ -1,10 +1,6 @@
 
-#ifndef UTILS_H
-#define UTILS_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
 double get_cur_time();
 
@@ -13,9 +9,5 @@ void print_mat(const double *mat, const unsigned int rows,
 
 void init_mat(double *mat, const unsigned int rows, const unsigned int cols,
               const unsigned int ld);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* UTILS_H */

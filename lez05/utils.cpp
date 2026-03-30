@@ -1,6 +1,6 @@
-#include "utils.h"
 #include <stdio.h>
 #include <time.h>
+#include "utils.hpp"
 
 double get_cur_time() {
   struct timespec ts;

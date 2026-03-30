@@ -1,7 +1,7 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
+#include "utils.hpp"
 
 #define BLOCK_SIZE 16
 
@@ -34,10 +34,10 @@ __global__ void matmat(const double *A, const double *B, double *C,
 }
 
 int main() {
-  const unsigned int N = 1024;
-  const unsigned int M = 1024;
-  const unsigned int K = 1024;
-  const unsigned int LD = 2048;
+  const unsigned int N = 8192;
+  const unsigned int M = 8192;
+  const unsigned int K = 8192;
+  const unsigned int LD = 8192;
 
   double start, end;
 
