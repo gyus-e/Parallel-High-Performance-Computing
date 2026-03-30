@@ -45,8 +45,16 @@ __global__ void matmat(const double *A, const double *B, double *C,
   for (int i = 0; i < K; i += BLOCK_SIZE) {
     // Each thread loads one element of the tile of A and B into shared memory.
     // The element is determined by the thread's local row and column indices within the block, and the current tile (i) in the K dimension.
-    shared_A[localRow * BLOCK_SIZE + localCol] = A[globalRow * ldA + (i + localCol)];
-    shared_B[localRow * BLOCK_SIZE + localCol] = B[(i + localRow) * ldB + globalCol];
+    if (globalRow < N && (i + localCol) < K) {
+      shared_A[localRow * BLOCK_SIZE + localCol] = A[globalRow * ldA + (i + localCol)];
+    } else {
+      shared_A[localRow * BLOCK_SIZE + localCol] = 0.0;
+    }
+    if ((i + localRow) < K && globalCol < M) {
+      shared_B[localRow * BLOCK_SIZE + localCol] = B[(i + localRow) * ldB + globalCol];
+    } else {
+      shared_B[localRow * BLOCK_SIZE + localCol] = 0.0;
+    }
     // Barrier to ensure all threads loaded their share of data into shared memory before proceeding
     __syncthreads(); 
 
