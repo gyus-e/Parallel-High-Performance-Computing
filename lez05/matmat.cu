@@ -5,7 +5,7 @@
 
 #define BLOCK_SIZE 16
 
-__device__ double dotProduct(const double *A, const double *B, const unsigned int K,
+inline __device__ double dotProduct(const double *__restrict__ A, const double *__restrict__ B, const unsigned int K,
                                       const unsigned int ldA, const unsigned int ldB,
                                       const unsigned int rowA, const unsigned int colB) {
   double sum = 0.0;
@@ -16,7 +16,7 @@ __device__ double dotProduct(const double *A, const double *B, const unsigned in
   return sum;
 }
 
-__global__ void matmat(const double *A, const double *B, double *C,
+__global__ void matmat(const double *__restrict__ A, const double *__restrict__ B, double *__restrict__ C,
                              const unsigned int N, const unsigned int M,
                              const unsigned int K, const unsigned int ldA,
                              const unsigned int ldB, const unsigned int ldC) {
