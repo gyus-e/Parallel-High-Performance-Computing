@@ -82,9 +82,17 @@ int main(int argc, char *argv[]) {
   printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", gpu_shared_mem_dissemination_label, a, b, gpu_shared_mem_dissemination_res);
   printf("[%s] Time taken: %lf ms; Speedup: %lf\n\n", gpu_shared_mem_dissemination_label, gpu_shared_mem_dissemination_time, gpu_shared_mem_dissemination_sp);
 
+  double gpu_warp_shuffle_dissemination_time, gpu_warp_shuffle_dissemination_sp;
+  const char* gpu_warp_shuffle_dissemination_label = "GPU warp shuffle dissemination sum";
+  const double gpu_warp_shuffle_dissemination_res = integral_gpu_warp_shuffle_dissemination_sum(a, b, h, n, blockSize, gridSize, &gpu_warp_shuffle_dissemination_time);
+  gpu_warp_shuffle_dissemination_sp = cpu_st_time / gpu_warp_shuffle_dissemination_time;
+  printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", gpu_warp_shuffle_dissemination_label, a, b, gpu_warp_shuffle_dissemination_res);
+  printf("[%s] Time taken: %lf ms; Speedup: %lf\n\n", gpu_warp_shuffle_dissemination_label, gpu_warp_shuffle_dissemination_time, gpu_warp_shuffle_dissemination_sp);
+
   return checkErr(cpu_st_res, cpu_st_res, "cpu_st_res", "cpu_mt_res") +
          checkErr(cpu_st_res, gpu_naive_res, "cpu_st_res", "gpu_naive_res") +
          checkErr(cpu_st_res, gpu_shared_mem_res, "cpu_st_res", "gpu_shared_mem_res") +
          checkErr(cpu_st_res, gpu_warp_shuffle_res, "cpu_st_res", "gpu_warp_shuffle_res") +
-         checkErr(cpu_st_res, gpu_shared_mem_dissemination_res, "cpu_st_res", "gpu_shared_mem_dissemination_sum_res");
+         checkErr(cpu_st_res, gpu_shared_mem_dissemination_res, "cpu_st_res", "gpu_shared_mem_dissemination_sum_res") +
+         checkErr(cpu_st_res, gpu_warp_shuffle_dissemination_res, "cpu_st_res", "gpu_warp_shuffle_dissemination_res");
 }

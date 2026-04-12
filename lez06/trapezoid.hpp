@@ -26,4 +26,9 @@ __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
                                                       const double h,
                                                       double *res);
 
+__global__ void trap_gpu_warp_shuffle_dissemination_sum(const double a,
+                                                        const unsigned long n,
+                                                        const double h,
+                                                        double *res);
+
 #endif /* TRAPEZOID_HPP */

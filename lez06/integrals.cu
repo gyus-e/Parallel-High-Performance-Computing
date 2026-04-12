@@ -141,3 +141,30 @@ double integral_gpu_shared_mem_dissemination_sum(const double a, const double b,
   cudaFree(sum);
   return res;
 }
+
+double integral_gpu_warp_shuffle_dissemination_sum(const double a, const double b, const double h, const unsigned long n, 
+                                                   const unsigned int blockSize, const unsigned int gridSize, double *time) {
+  double res = f(a) + f(b);
+  double *sum;
+  cudaMallocManaged(&sum, sizeof(double));
+  *sum = 0;
+
+  const unsigned int sharedMemSize = blockSize * sizeof(double);
+  dim3 dimBlock(blockSize);
+  dim3 dimGrid(gridSize);
+
+  double start = omp_get_wtime() * 1000;
+
+  trap_gpu_warp_shuffle_dissemination_sum<<<dimGrid, dimBlock, sharedMemSize>>>(a, n, h, sum);
+  cudaDeviceSynchronize();
+
+  double end = omp_get_wtime() * 1000;
+  if (time != nullptr) {
+    *time = end - start;
+  }
+
+  res += 2 * (*sum);
+  res *= h * 0.5;
+  cudaFree(sum);
+  return res;
+}
