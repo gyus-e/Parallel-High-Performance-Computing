@@ -1,4 +1,5 @@
 #include "integrals.hpp"
+#include "utils.hpp"
 #include <math.h>
 #include <omp.h>
 #include <stdio.h>
@@ -6,8 +7,6 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
-#define WARP_SIZE 32
 
 int checkErr(const double a, const double b, const char a_name[], const char b_name[]) {
   if (fabs(a - b) > 1e-6) {
@@ -18,7 +17,7 @@ int checkErr(const double a, const double b, const char a_name[], const char b_n
 }
 
 int main(int argc, char *argv[]) {
-  const unsigned long n = pow(2, 20);
+  const unsigned long n = pow(2, 20) - 1;
   const unsigned int nt = omp_get_max_threads();
 
   unsigned int k = 1;
@@ -29,7 +28,7 @@ int main(int argc, char *argv[]) {
       k = 1;
     }
   }
-  const unsigned int blockSize = k*WARP_SIZE;
+  const unsigned int blockSize = k*WARP_SIZE <= MAX_BLKSZ ? k*WARP_SIZE : MAX_BLKSZ;
   const unsigned int gridSize = (n + blockSize - 1) / blockSize;
 
   printf("Using %lu subdivisions for the integral approximation.\n", n);

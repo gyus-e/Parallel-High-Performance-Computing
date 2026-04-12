@@ -83,13 +83,22 @@ warp 0 consists of all the threads with rank between 0 and warpSize-1
 There can be a shared array to store up to 32 elements,
 thread with lane 0 of each warp w will store its own sum in the w element of that array
 */
-
-__device__ double shared_mem_dissemination_sum(double sdata[]) { 
-  return 0;
+__device__ double warp_shuffle_dissemination_sum(double val) { 
+  return warp_shuffle_dissemination_sum_single_warp(val);
 }
 
-__device__ double warp_shuffle_dissemination_sum(double val) { 
-  return 0;
+/**
+If we’re using shared memory instead of warp shuffles to
+compute the warp sums, we’ll need enough shared memory
+for each warp in a thread block.
+Since shared variables are shared by all the threads in a
+thread block, we need an array large enough to hold the
+contributions of all of the threads to the sum.
+We can declare an array with 1024 elements — the largest
+possible block size — and partition it among the warps.
+*/
+__device__ double shared_mem_dissemination_sum(double sdata[]) { 
+  return shared_mem_dissemination_sum_single_warp(sdata);
 }
 
 
@@ -131,6 +140,7 @@ __global__ void trap_gpu_shared_mem_tree_sum(const double a,
   const unsigned int tid = threadIdx.x;
   const unsigned int i = threadIdx.x + blockIdx.x * blockDim.x;
 
+  sdata[tid] = 0;
   if (i < n && i > 0) {
     double x_i = a + i * h;
     sdata[tid] = f(x_i);
@@ -171,6 +181,7 @@ __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
   const unsigned int lane = tid % warpSize;
   const unsigned int i = threadIdx.x + blockIdx.x * blockDim.x;
 
+  sdata[tid] = 0;
   if (i < n && i > 0) {
     double x_i = a + i * h;
     sdata[tid] = f(x_i);
