@@ -5,17 +5,9 @@
 #include <omp.h>
 
 /**
-Note for shared memory:
-We should get the best performance if sdata is declared in the kernel as
-  extern __shared__ double sdata[]
-We want the shared memory size to be equal to the block size
-  shMem = blockSize * sizeof(double)
-And the kernel must be called with 3 arguments in the triple angle brackets
-  <<<Nblocks, blockSize, shMem>>>
-*/
-
-/**
-Shared memory, tree-structured sum.
+---------------------------------------------------------------------------------
+TREE-STRUCTURED SUM - SHARED MEMORY
+---------------------------------------------------------------------------------
 Pair up the threads so that half of the “active” threads add their partial sum to their partner’s partial sum.
 */
 __device__ void shared_mem_tree_sum(double sdata[]) {
@@ -29,7 +21,9 @@ __device__ void shared_mem_tree_sum(double sdata[]) {
 }
 
 /**
-Warp shuffle, tree-structured sum.
+---------------------------------------------------------------------------------
+TREE-STRUCTURED SUM - WARP SHUFFLE
+---------------------------------------------------------------------------------
 Warp shuffle instructions allow threads within a warp to read variables stored in another thread’s register in the warp. 
 This allows us to compute the global sum in registers, which are faster than shared memory. 
 Threads in a warp execute in lockstep, so synchronization is not needed.
@@ -43,10 +37,12 @@ __device__ double warp_shuffle_tree_sum(double val) {
 }
 
 /**
+---------------------------------------------------------------------------------
+DISSEMINATION SUM - SHARED MEMORY
+---------------------------------------------------------------------------------
 Every thread reads a value from another thread in each step.
 At the end, all the threads have the total sum.
 On each step, shift 'val' down by 'offset' lanes and add it to the local 'val’.
-This function works if sdata is in shared or global memory.
 Make sure 0 <= source <= warpSize.
 */
 __device__ double shared_mem_dissemination_sum(double sdata[]) {
@@ -59,6 +55,17 @@ __device__ double shared_mem_dissemination_sum(double sdata[]) {
   }
   return sdata[lane];
 }
+
+/**
+---------------------------------------------------------------------------------
+TRAPEZOIDAL RULE KERNELS
+---------------------------------------------------------------------------------
+The integral of f(x) from a to b is approximated by:
+(h/2) * [f(x_0) + 2 * sum[i=1 to n-1](f(x_i)) + f(x_n)]
+where:
+h = (b - a) / n
+x_i = a + i * h
+*/
 
 void trap_cpu(const double a, const unsigned long n, const double h,
               double &res) {

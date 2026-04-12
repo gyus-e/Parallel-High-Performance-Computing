@@ -5,12 +5,14 @@
 #include <math.h>
 #include <omp.h>
 
-/**
-Trapezoidal rule: the integral of f(x) from a to b is approximated by:
-(h/2) * [f(x_0) + 2 * sum[i=1 to n-1](f(x_i)) + f(x_n)]
-where:
-h = (b - a) / n
-x_i = a + i * h
+/*
+Note for shared memory:
+We should get the best performance if sdata is declared in the kernel as
+  extern __shared__ double sdata[]
+We want the shared memory size to be equal to the block size
+  shMem = blockSize * sizeof(double)
+And the kernel must be called with 3 arguments in the triple angle brackets
+  <<<Nblocks, blockSize, shMem>>>
 */
 
 double integral_cpu(const double a, const double b, const double h,
