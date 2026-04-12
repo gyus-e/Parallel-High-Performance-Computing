@@ -219,7 +219,7 @@ int checkErr(const double a, const double b, const char a_name[], const char b_n
 }
 
 int main(int argc, char *argv[]) {
-  const unsigned long n = pow(2, 14);
+  const unsigned long n = pow(2, 16);
   const unsigned int nt = omp_get_max_threads();
   const unsigned int blockSize = 2*WARP_SIZE;
   const unsigned int gridSize = (n + blockSize - 1) / blockSize;
@@ -232,19 +232,19 @@ int main(int argc, char *argv[]) {
   const double b = M_PI;
   const double h = (b - a) / (double)n;
 
-  double cpu_st_res = integral_cpu(a, b, h, n, 1);
+  const double cpu_st_res = integral_cpu(a, b, h, n, 1);
   printf("[CPU sequential] Integral of f(x) from %lf to %lf = %lf\n\n", a, b, cpu_st_res);
 
-  double cpu_mt_res = integral_cpu(a, b, h, n, nt);
+  const double cpu_mt_res = integral_cpu(a, b, h, n, nt);
   printf("[CPU multithread] Integral of f(x) from %lf to %lf = %lf\n\n", a, b, cpu_mt_res);
 
-  double gpu_naive_res = integral_gpu_naive(a, b, h, n, blockSize, gridSize);
+  const double gpu_naive_res = integral_gpu_naive(a, b, h, n, blockSize, gridSize);
   printf("[GPU naive] Integral of f(x) from %lf to %lf = %lf\n\n", a, b, gpu_naive_res);
 
-  double gpu_shared_mem_res = integral_gpu_shared_mem(a, b, h, n, blockSize, gridSize);
+  const double gpu_shared_mem_res = integral_gpu_shared_mem(a, b, h, n, blockSize, gridSize);
   printf("[GPU shared_mem] Integral of f(x) from %lf to %lf = %lf\n\n", a, b, gpu_shared_mem_res);
 
-  double gpu_warp_shuffle_res = integral_gpu_warp_shuffle(a, b, h, n, blockSize, gridSize);
+  const double gpu_warp_shuffle_res = integral_gpu_warp_shuffle(a, b, h, n, blockSize, gridSize);
   printf("[GPU warp_shuffle] Integral of f(x) from %lf to %lf = %lf\n\n", a, b, gpu_warp_shuffle_res);
 
   return checkErr(cpu_st_res, cpu_st_res, "cpu_st_res", "cpu_mt_res") +
