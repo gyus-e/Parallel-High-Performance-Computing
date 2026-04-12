@@ -36,37 +36,33 @@ int main(int argc, char *argv[]) {
   printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", cpu_st_label, a, b, cpu_st_res);
   printf("[%s] Time taken: %lf ms\n\n", cpu_st_label, cpu_st_time);
 
-  double cpu_mt_time, cpu_mt_sp, cpu_mt_eff;
+  double cpu_mt_time, cpu_mt_sp;
   const char* cpu_mt_label = "CPU multithread";
   const double cpu_mt_res = integral_cpu(a, b, h, n, nt, &cpu_mt_time);
   cpu_mt_sp = cpu_st_time / cpu_mt_time;
-  cpu_mt_eff = cpu_mt_sp / nt;
   printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", cpu_mt_label, a, b, cpu_mt_res);
-  printf("[%s] Time taken: %lf ms; Speedup: %lf; Efficiency: %lf\n\n", cpu_mt_label, cpu_mt_time, cpu_mt_sp, cpu_mt_eff);
+  printf("[%s] Time taken: %lf ms; Speedup: %lf\n\n", cpu_mt_label, cpu_mt_time, cpu_mt_sp);
 
-  double gpu_naive_time, gpu_naive_sp, gpu_naive_eff;
+  double gpu_naive_time, gpu_naive_sp;
   const char* gpu_naive_label = "GPU naive";
   const double gpu_naive_res = integral_gpu_naive(a, b, h, n, blockSize, gridSize, &gpu_naive_time);
   gpu_naive_sp = cpu_st_time / gpu_naive_time;
-  gpu_naive_eff = gpu_naive_sp / n;
   printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", gpu_naive_label, a, b, gpu_naive_res);
-  printf("[%s] Time taken: %lf ms; Speedup: %lf; Efficiency: %lf\n\n", gpu_naive_label, gpu_naive_time, gpu_naive_sp, gpu_naive_eff);
+  printf("[%s] Time taken: %lf ms; Speedup: %lf\n\n", gpu_naive_label, gpu_naive_time, gpu_naive_sp);
 
-  double gpu_shared_mem_time, gpu_shared_mem_sp, gpu_shared_mem_eff;
+  double gpu_shared_mem_time, gpu_shared_mem_sp;
   const char* gpu_shared_mem_label = "GPU shared memory tree-structured sum";
   const double gpu_shared_mem_res = integral_gpu_shared_mem(a, b, h, n, blockSize, gridSize, &gpu_shared_mem_time);
   gpu_shared_mem_sp = cpu_st_time / gpu_shared_mem_time;
-  gpu_shared_mem_eff = gpu_shared_mem_sp / n;
   printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", gpu_shared_mem_label, a, b, gpu_shared_mem_res);
-  printf("[%s] Time taken: %lf ms; Speedup: %lf; Efficiency: %lf\n\n", gpu_shared_mem_label, gpu_shared_mem_time, gpu_shared_mem_sp, gpu_shared_mem_eff);
+  printf("[%s] Time taken: %lf ms; Speedup: %lf\n\n", gpu_shared_mem_label, gpu_shared_mem_time, gpu_shared_mem_sp);
 
-  double gpu_warp_shuffle_time, gpu_warp_shuffle_sp, gpu_warp_shuffle_eff;
+  double gpu_warp_shuffle_time, gpu_warp_shuffle_sp;
   const char* gpu_warp_shuffle_label = "GPU warp shuffle tree-structured sum";
   const double gpu_warp_shuffle_res = integral_gpu_warp_shuffle(a, b, h, n, blockSize, gridSize, &gpu_warp_shuffle_time);
   gpu_warp_shuffle_sp = cpu_st_time / gpu_warp_shuffle_time;
-  gpu_warp_shuffle_eff = gpu_warp_shuffle_sp / n;
   printf("[%s] Integral of f(x) from %lf to %lf = %lf\n", gpu_warp_shuffle_label, a, b, gpu_warp_shuffle_res);
-  printf("[%s] Time taken: %lf ms; Speedup: %lf; Efficiency: %lf\n\n", gpu_warp_shuffle_label, gpu_warp_shuffle_time, gpu_warp_shuffle_sp, gpu_warp_shuffle_eff);
+  printf("[%s] Time taken: %lf ms; Speedup: %lf\n\n", gpu_warp_shuffle_label, gpu_warp_shuffle_time, gpu_warp_shuffle_sp);
 
   return checkErr(cpu_st_res, cpu_st_res, "cpu_st_res", "cpu_mt_res") +
          checkErr(cpu_st_res, gpu_naive_res, "cpu_st_res", "gpu_naive_res") +

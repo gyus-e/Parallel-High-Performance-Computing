@@ -23,7 +23,7 @@ Note that the sum must be protected by a critical section or a reduction to avoi
 */
 void trap_cpu(const double a, const unsigned long n, const double h,
               double &res) {
-  double sum = 0;
+  double sum = res;
   #pragma omp parallel for reduction(+:sum)
   for (int i = 1; i < n; i++) {
     double x_i = a + i * h;
