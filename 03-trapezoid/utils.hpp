@@ -7,7 +7,13 @@
 #define MAX_BLKSZ 1024
 #define FULL_MASK 0xffffffff
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+#define A 0.0
+#define B (2*M_PI)
+#define F_CORRECT -0.12212260462
 inline __device__ __host__ double f(const double x) { return x*exp(-x)*cos(2*x); }
-// integrale tra 0 e 2pi uguale a −0.12212260462
 
 #endif /* UTILS_HPP */

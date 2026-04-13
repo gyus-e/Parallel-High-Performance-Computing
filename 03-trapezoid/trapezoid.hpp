@@ -13,7 +13,8 @@ __global__ void trap_gpu_naive(const double a,
 
 __global__ void trap_gpu_shared_mem_tree_sum(const double a,
                                              const unsigned long n,
-                                             const double h, 
+                                             const double h,
+                                             const unsigned int sdataLen,
                                              double *res);
 
 __global__ void trap_gpu_warp_shuffle_tree_sum(const double a,
@@ -24,9 +25,10 @@ __global__ void trap_gpu_warp_shuffle_tree_sum(const double a,
 __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
                                                       const unsigned long n,
                                                       const double h,
+                                                      const unsigned int sdataLen,
                                                       double *res);
 
-__global__ void trap_gpu_dissemination_sum(const double a,
+__global__ void trap_gpu_warp_shuffle_dissemination_sum(const double a,
                                            const unsigned long n,
                                            const double h,
                                            double *res);

@@ -13,7 +13,10 @@ double integral_gpu_shared_mem_tree_sum(const double a, const double b, const do
 double integral_gpu_warp_shuffle_tree_sum(const double a, const double b, const double h, const unsigned long n, 
                                           const unsigned int blockSize, const unsigned int gridSize, double *time);
 
-double integral_gpu_dissemination_sum(const double a, const double b, const double h, const unsigned long n, 
-                                      const unsigned int blockSize, const unsigned int gridSize, double *time);
+double integral_gpu_shared_mem_dissemination_sum(const double a, const double b, const double h, const unsigned long n, 
+                                                 const unsigned int blockSize, const unsigned int gridSize, double *time);
+
+double integral_gpu_warp_shuffle_dissemination_sum(const double a, const double b, const double h, const unsigned long n, 
+                                                   const unsigned int blockSize, const unsigned int gridSize, double *time);
 
 #endif /* INTEGRALS_HPP */
