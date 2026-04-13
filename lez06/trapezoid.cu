@@ -183,9 +183,9 @@ __global__ void trap_gpu_warp_shuffle_tree_sum(const double a,
 }
 
 __global__ void trap_gpu_dissemination_sum(const double a,
-                                                        const unsigned long n,
-                                                        const double h,
-                                                        double *res) {
+                                           const unsigned long n,
+                                           const double h,
+                                           double *res) {
   extern __shared__ double sdata[];
   const unsigned int tid = threadIdx.x;
   const unsigned int lane = tid % warpSize;
