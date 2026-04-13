@@ -178,8 +178,9 @@ __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
   const unsigned int block_tid = threadIdx.x;
   const unsigned int lane = block_tid % warpSize;
   const unsigned int warp = block_tid / warpSize;
-  const unsigned int warpsPerBlock = (blockDim.x / WARP_SIZE) + ((blockDim.x % WARP_SIZE) != 0);
+  // const unsigned int warpsPerBlock = (blockDim.x / WARP_SIZE) + ((blockDim.x % WARP_SIZE) != 0);
   // Nota che MAX_BLKSZ = 1024 e WARP_SIZE = 32, di conseguenza warpsPerBlock <= WARP_SIZE
+  // Ovviamente warp <= warpsPerBlock è sempre verificato, e quindi anche warp <= WARP_SIZE
 
   double *shared_vals = &thread_calcs[warp * warpSize];
 
@@ -188,15 +189,14 @@ __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
     double x_i = a + glob_tid * h;
     val = f(x_i);
   }
-  // thread_calcs[block_tid] = val
-  shared_vals[lane] = val; 
+  shared_vals[lane] = val; // Equivalente a thread_calcs[block_tid] = val
   warp_sum_arr[lane] = 0.0;
   __syncthreads();
 
   double sum = shared_mem_tree_sum(shared_vals, warpSize, lane, warpSize);
   __syncthreads();
 
-  if (lane == 0 && warp <= warpsPerBlock) { // OVVIAMENTE warp <= warpsPerBlock è sempre verificato
+  if (lane == 0 && warp <= WARP_SIZE) { 
     warp_sum_arr[warp] = sum; 
   }
   __syncthreads();
