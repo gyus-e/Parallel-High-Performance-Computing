@@ -51,12 +51,9 @@ On each step, shift 'val' down by 'offset' lanes and add it to the local 'val’
 Make sure 0 <= source <= warpSize.
 Note: this only works for threads in the same warp
 */
-__device__ double shared_mem_dissemination_sum(double sdata[], const unsigned int sdataLen) {
-  const unsigned int block_tid = threadIdx.x;
-  const unsigned int lane = block_tid % warpSize;
-
-  for (unsigned int offset = (warpSize >> 1); offset > 0; offset >>= 1) {
-    const unsigned int source = (lane + offset) % warpSize;
+__device__ double shared_mem_dissemination_sum(double sdata[], const unsigned int sdataLen, const unsigned int lane, const unsigned int blockSize) {
+  for (unsigned int offset = (blockSize >> 1); offset > 0; offset >>= 1) {
+    const unsigned int source = (lane + offset) % blockSize;
     if (source < sdataLen && lane < sdataLen) { 
       sdata[lane] += sdata[source];
     }
@@ -193,7 +190,10 @@ __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
   warp_sum_arr[lane] = 0.0;
   __syncthreads();
 
-  double sum = shared_mem_tree_sum(shared_vals, warpSize, lane, warpSize);
+  // double sum = shared_mem_tree_sum(shared_vals, warpSize, lane, warpSize);
+  double sum = shared_mem_dissemination_sum(shared_vals, warpSize, lane, warpSize);
+  // double sum = warp_shuffle_tree_sum(val);
+  // double sum = warp_shuffle_dissemination_sum(val);
   __syncthreads();
 
   if (lane == 0 && warp <= WARP_SIZE) { 
@@ -202,7 +202,10 @@ __global__ void trap_gpu_shared_mem_dissemination_sum(const double a,
   __syncthreads();
 
   if (warp == 0) {
-    sum = shared_mem_tree_sum(warp_sum_arr, warpSize, lane, warpSize);
+    // sum = shared_mem_tree_sum(warp_sum_arr, warpSize, lane, warpSize);
+    sum = shared_mem_dissemination_sum(warp_sum_arr, warpSize, lane, warpSize);
+    // sum = warp_shuffle_tree_sum(warp_sum_arr[lane]);
+    // sum = warp_shuffle_dissemination_sum(warp_sum_arr[lane]);
     __syncthreads();
 
     if (lane == 0) {
