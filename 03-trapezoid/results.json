@@ -1,451 +1,442 @@
 {
-"Test 1": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.752700,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 6.995400,
-	"speedup": 3.681376
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.346200,
-	"speedup": 10.976345
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.503400,
-	"speedup": 51.157532
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.542600,
-	"speedup": 47.461665
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.508100,
-	"speedup": 50.684314
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.510900,
-	"speedup": 50.406535
-}}
-,
-"Test 2": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 28.704000,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 40.673000,
-	"speedup": 0.705726
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.497500,
-	"speedup": 11.493093
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.509600,
-	"speedup": 56.326532
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.502200,
-	"speedup": 57.156510
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.524000,
-	"speedup": 54.778627
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.508600,
-	"speedup": 56.437276
-}}
-,
-"Test 3": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 28.821100,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 25.239100,
-	"speedup": 1.141923
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.518100,
-	"speedup": 11.445574
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.725400,
-	"speedup": 39.731319
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.580900,
-	"speedup": 49.614565
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.579900,
-	"speedup": 49.700119
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.542900,
-	"speedup": 53.087306
-}}
-,
-"Test 4": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.788400,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 13.117200,
-	"speedup": 1.965999
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.530100,
-	"speedup": 10.192641
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.517500,
-	"speedup": 49.832659
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.664300,
-	"speedup": 38.820413
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.513900,
-	"speedup": 50.181749
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.516900,
-	"speedup": 49.890498
-}}
-,
-"Test 5": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.776800,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 8.681800,
-	"speedup": 2.969062
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.323300,
-	"speedup": 11.094908
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.508800,
-	"speedup": 50.661947
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.507100,
-	"speedup": 50.831787
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.536600,
-	"speedup": 48.037272
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.509000,
-	"speedup": 50.642043
-}}
-,
-"Test 6": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.616000,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 7.477100,
-	"speedup": 3.425927
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.343700,
-	"speedup": 10.929727
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.516900,
-	"speedup": 49.556977
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.496800,
-	"speedup": 51.561996
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.543400,
-	"speedup": 47.140227
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.505500,
-	"speedup": 50.674581
-}}
-,
-"Test 7": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.890300,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 7.402600,
-	"speedup": 3.497460
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.271800,
-	"speedup": 11.396382
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.557800,
-	"speedup": 46.415024
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.495700,
-	"speedup": 52.229776
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.579300,
-	"speedup": 44.692388
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.509300,
-	"speedup": 50.835065
-}}
-,
-"Test 8": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 26.836500,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 9.098600,
-	"speedup": 2.949520
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.368100,
-	"speedup": 11.332503
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.499900,
-	"speedup": 53.683739
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.534800,
-	"speedup": 50.180442
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.643500,
-	"speedup": 41.703965
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.510700,
-	"speedup": 52.548461
-}}
-,
-"Test 9": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.798900,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 7.301800,
-	"speedup": 3.533225
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.324100,
-	"speedup": 11.100598
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.512300,
-	"speedup": 50.358971
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.500800,
-	"speedup": 51.515374
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.525100,
-	"speedup": 49.131407
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.499300,
-	"speedup": 51.670141
-}}
-,
-"Test 10": 
-{
-"f(x)": "x*exp(-x)*cos(2*x)",
-"a": 0.000000,
-"b": 6.283185,
-"n": 1048576,
-"nt (cpu)": 6,
-"blockSize": 64,
-"gridSize": 16384,
-"CPU sequential": {
-	"res": -0.122123,
-	"time (ms)": 25.704500,
-	"speedup": 1.000000
-},
-"CPU multithread": {
-	"res": -0.122123,
-	"time (ms)": 18.142300,
-	"speedup": 1.416827
-},
-"GPU naive": {
-	"res": -0.122123,
-	"time (ms)": 2.470200,
-	"speedup": 10.405838
-},
-"GPU shared memory tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.510400,
-	"speedup": 50.361481
-},
-"GPU warp shuffle tree-structured sum": {
-	"res": -0.122123,
-	"time (ms)": 0.591800,
-	"speedup": 43.434437
-},
-"GPU shared memory dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.731200,
-	"speedup": 35.153856
-},
-"GPU warp shuffle dissemination sum": {
-	"res": -0.122123,
-	"time (ms)": 0.499500,
-	"speedup": 51.460460
-}}
+	"Test 1": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.752700,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 6.995400,
+			"speedup": 3.681376
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.346200,
+			"speedup": 10.976345
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.503400,
+			"speedup": 51.157532
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.542600,
+			"speedup": 47.461665
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.508100,
+			"speedup": 50.684314
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.510900,
+			"speedup": 50.406535
+		}
+	},
+	"Test 2": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 28.704000,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 40.673000,
+			"speedup": 0.705726
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.497500,
+			"speedup": 11.493093
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.509600,
+			"speedup": 56.326532
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.502200,
+			"speedup": 57.156510
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.524000,
+			"speedup": 54.778627
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.508600,
+			"speedup": 56.437276
+		}
+	},
+	"Test 3": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 28.821100,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 25.239100,
+			"speedup": 1.141923
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.518100,
+			"speedup": 11.445574
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.725400,
+			"speedup": 39.731319
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.580900,
+			"speedup": 49.614565
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.579900,
+			"speedup": 49.700119
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.542900,
+			"speedup": 53.087306
+		}
+	},
+	"Test 4": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.788400,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 13.117200,
+			"speedup": 1.965999
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.530100,
+			"speedup": 10.192641
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.517500,
+			"speedup": 49.832659
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.664300,
+			"speedup": 38.820413
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.513900,
+			"speedup": 50.181749
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.516900,
+			"speedup": 49.890498
+		}
+	},
+	"Test 5": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.776800,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 8.681800,
+			"speedup": 2.969062
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.323300,
+			"speedup": 11.094908
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.508800,
+			"speedup": 50.661947
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.507100,
+			"speedup": 50.831787
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.536600,
+			"speedup": 48.037272
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.509000,
+			"speedup": 50.642043
+		}
+	},
+	"Test 6": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.616000,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 7.477100,
+			"speedup": 3.425927
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.343700,
+			"speedup": 10.929727
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.516900,
+			"speedup": 49.556977
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.496800,
+			"speedup": 51.561996
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.543400,
+			"speedup": 47.140227
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.505500,
+			"speedup": 50.674581
+		}
+	},
+	"Test 7": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.890300,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 7.402600,
+			"speedup": 3.497460
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.271800,
+			"speedup": 11.396382
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.557800,
+			"speedup": 46.415024
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.495700,
+			"speedup": 52.229776
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.579300,
+			"speedup": 44.692388
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.509300,
+			"speedup": 50.835065
+		}
+	},
+	"Test 8": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 26.836500,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 9.098600,
+			"speedup": 2.949520
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.368100,
+			"speedup": 11.332503
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.499900,
+			"speedup": 53.683739
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.534800,
+			"speedup": 50.180442
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.643500,
+			"speedup": 41.703965
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.510700,
+			"speedup": 52.548461
+		}
+	},
+	"Test 9": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.798900,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 7.301800,
+			"speedup": 3.533225
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.324100,
+			"speedup": 11.100598
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.512300,
+			"speedup": 50.358971
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.500800,
+			"speedup": 51.515374
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.525100,
+			"speedup": 49.131407
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.499300,
+			"speedup": 51.670141
+		}
+	},
+	"Test 10": {
+		"f(x)": "x*exp(-x)*cos(2*x)",
+		"a": 0.000000,
+		"b": 6.283185,
+		"n": 1048576,
+		"nt (cpu)": 6,
+		"blockSize": 64,
+		"gridSize": 16384,
+		"CPU sequential": {
+			"res": -0.122123,
+			"time (ms)": 25.704500,
+			"speedup": 1.000000
+		},
+		"CPU multithread": {
+			"res": -0.122123,
+			"time (ms)": 18.142300,
+			"speedup": 1.416827
+		},
+		"GPU naive": {
+			"res": -0.122123,
+			"time (ms)": 2.470200,
+			"speedup": 10.405838
+		},
+		"GPU shared memory tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.510400,
+			"speedup": 50.361481
+		},
+		"GPU warp shuffle tree-structured sum": {
+			"res": -0.122123,
+			"time (ms)": 0.591800,
+			"speedup": 43.434437
+		},
+		"GPU shared memory dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.731200,
+			"speedup": 35.153856
+		},
+		"GPU warp shuffle dissemination sum": {
+			"res": -0.122123,
+			"time (ms)": 0.499500,
+			"speedup": 51.460460
+		}
+	}
 }
