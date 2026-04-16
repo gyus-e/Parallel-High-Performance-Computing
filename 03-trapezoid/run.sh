@@ -33,6 +33,10 @@ run 1 20 0
 echo "," >> results/results.json
 run 2 20 0
 echo "," >> results/results.json
+run 3 20 0
+echo "," >> results/results.json
+run 4 20 0
+echo "," >> results/results.json
 run 5 20 0
 echo "," >> results/results.json
 
@@ -40,6 +44,10 @@ echo "," >> results/results.json
 run 1 20 17
 echo "," >> results/results.json
 run 2 20 17
+echo "," >> results/results.json
+run 3 20 17
+echo "," >> results/results.json
+run 4 20 17
 echo "," >> results/results.json
 run 5 20 17
 echo "}" >> results/results.json
