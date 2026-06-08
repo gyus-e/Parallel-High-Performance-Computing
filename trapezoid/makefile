@@ -2,7 +2,7 @@ SRC = ./src
 BIN = ./bin
 CC = nvcc
 CFLAGS = -arch=sm_89
-XFLAGS = -Xcompiler=/openmp
+XFLAGS = -Xcompiler=-fopenmp
 # Adjust the architecture flag as needed, e.g. -arch=sm_75 on Google Colaboratory 
 
 all: main.exe

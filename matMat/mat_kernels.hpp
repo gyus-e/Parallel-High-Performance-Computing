@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #ifndef MAT_KERNELS_HPP
 #define MAT_KERNELS_HPP
 
