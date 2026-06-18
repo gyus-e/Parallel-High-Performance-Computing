@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ ! -f main.exe ]; then
+    mkdir -p bin
     make -j
 fi
 
