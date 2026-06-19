@@ -1,6 +1,6 @@
 import cupy as cp
-import numpy as np
 import cuda.tile as ct
+import utils
 
 
 @ct.kernel
@@ -8,74 +8,85 @@ def matmat_kernel(
     a: cp.ndarray,
     b: cp.ndarray,
     c: cp.ndarray,
-    n: ct.Constant[int],
-    k: ct.Constant[int],
-    m: ct.Constant[int],
-    tile_size_row: ct.Constant[int],
-    tile_size_col: ct.Constant[int],
+    tn: ct.Constant[int],
+    tk: ct.Constant[int],
+    tm: ct.Constant[int],
 ):
-    bid_row = ct.bid(0)
-    bid_col = ct.bid(1)
+    ii = ct.bid(0)
+    jj = ct.bid(1)
 
-    a_tile = ct.load(
-        a, index=(bid_row, 0), shape=(tile_size_row, k)
-    )
-    b_tile = ct.load(
-        b, index=(0, bid_col), shape=(k, tile_size_col)
-    )
-    result = a_tile @ b_tile
+    num_tiles = ct.num_tiles(a, axis=1, shape=(tn, tk))
+    # num_tiles = ct.num_tiles(b, axis=0, shape=(tk, tm))
 
-    if bid_row * tile_size_row < n and bid_col * tile_size_col < m:
-        ct.store(c, index=(bid_row, bid_col), tile=result)
+    acc = ct.full((tn, tm), 0.0, dtype=a.dtype)
+
+    for kk in range(num_tiles):
+        a_tile = ct.load(a, index=(ii, kk), shape=(tn, tk))
+        b_tile = ct.load(b, index=(kk, jj), shape=(tk, tm))
+        acc = ct.mma(a_tile, b_tile, acc)
+
+    ct.store(c, index=(ii, jj), tile=acc)
 
 
-def matmat(
+def test_matmat(
     a: cp.ndarray,
     b: cp.ndarray,
     c: cp.ndarray,
-    n: ct.Constant[int],
-    k: ct.Constant[int],
-    m: ct.Constant[int],
-    tile_size_row: ct.Constant[int],
-    tile_size_col: ct.Constant[int],
+    tn: ct.Constant[int],
+    tk: ct.Constant[int],
+    tm: ct.Constant[int],
+    grid: utils.Dim3,
+    stream: cp.cuda.Stream = cp.cuda.get_current_stream(),
 ):
-    assert a.shape == (n, k)
-    assert b.shape == (k, m)
-    assert c.shape == (n, m)
-
-    griddims_x = ct.cdiv(n, tile_size_row)
-    griddims_y = ct.cdiv(m, tile_size_col)
-    grid = (griddims_x, griddims_y, 1)
+    assert a.dtype == b.dtype == c.dtype
+    assert a.shape[1] == b.shape[0]
+    assert c.shape[0] == a.shape[0] and c.shape[1] == b.shape[1]
 
     ct.launch(
-        cp.cuda.get_current_stream(),
+        stream,
         grid,
         matmat_kernel,
-        (a, b, c, n, k, m, tile_size_row, tile_size_col),
+        (a, b, c, tn, tk, tm),
     )
-
-
-def main():
-    rng = cp.random.default_rng()
-
-    n = 2**8
-    k = 2**7
-    m = 2**9
-    tile_size = 2**4
-    
-    a = rng.random((n, k))
-    b = rng.random((k, m))
-    c = cp.zeros((n, m), dtype=a.dtype)
-
-    matmat(a, b, c, n, k, m, tile_size, tile_size)
 
     a_np = cp.asnumpy(a)
     b_np = cp.asnumpy(b)
     c_np = cp.asnumpy(c)
     expected = a_np @ b_np
-    np.testing.assert_array_almost_equal(c_np, expected)
 
-    print("✓ matmat_example passed!")
+    utils.assert_close(c_np, expected, "matmat_kernel")
+
+
+def main():
+    n = 2**10
+    k = 2**8
+    m = 2**9
+
+    tn = 256
+    tk = 64
+    tm = 128
+
+    rng: cp.random._generator_api = cp.random.default_rng()
+    a = rng.random((n, k))
+    b = rng.random((k, m))
+    c = cp.zeros((n, m), dtype=a.dtype)
+
+    stream = cp.cuda.get_current_stream()
+    grid = (int(ct.cdiv(n, tn)), int(ct.cdiv(m, tm)), 1)
+
+    test_matmat(a, b, c, tn, tk, tm, grid, stream)
+    print("✓ matmat_kernel passed!")
+
+    time = utils.bench(
+        matmat_kernel,
+        (a, b, c, tn, tk, tm),
+        grid=grid,
+        stream=stream,
+        warmup=10,
+        iters=100,
+    )
+    print(f"matmat_kernel: {time:.3e} sec/iter")
+
 
 
 if __name__ == "__main__":
