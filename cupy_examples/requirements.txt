@@ -1,0 +1,4 @@
+cuda-tile[tileiras]
+cupy-cuda13x
+pytest 
+numpy
