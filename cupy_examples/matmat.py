@@ -119,22 +119,18 @@ def main():
     k = 2**8
     m = 2**9
 
-    grid = (int(ct.cdiv(n, tn)), int(ct.cdiv(m, tm)), 1)
-    stream = cp.cuda.get_current_stream()
-
     rng: cp.random._generator_api = cp.random.default_rng()
 
     a = rng.random((n, k))
     b = rng.random((k, m))
     c = cp.zeros((n, m), dtype=a.dtype)
 
+    stream = cp.cuda.get_current_stream()
+
     # Test
+    grid = (int(ct.cdiv(n, tn)), int(ct.cdiv(m, tm)), 1)
     test_matmat(a, b, c, tn, tk, tm, grid, stream)
     print("✓ matmat_kernel passed!")
-
-    test_matmat_swizzled(a, b, c, tn, tk, tm, grid, stream)
-    print("✓ matmat_swizzled_kernel passed!")
-
     # Benchmark
     time = utils.bench(
         matmat_kernel,
@@ -146,6 +142,11 @@ def main():
     )
     print(f"matmat_kernel: {time:.3e} sec/iter")
 
+    # Test
+    grid = (int(ct.cdiv(n, tn)) * int(ct.cdiv(m, tm)), 1, 1)
+    test_matmat_swizzled(a, b, c, tn, tk, tm, grid, stream)
+    print("✓ matmat_swizzled_kernel passed!")
+    # Benchmark
     time = utils.bench(
         matmat_swizzled_kernel,
         (a, b, c, tn, tk, tm),
